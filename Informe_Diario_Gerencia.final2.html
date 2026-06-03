@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>Informe Diario | Plan Gerencia Proyectos | Encabezado persistente</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #eef2f7;
+            font-family: system-ui, -apple-system, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+            padding: 16px 12px 40px;
+            color: #1a2c3e;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* CABECERA CON IMAGEN PERSONALIZABLE */
+        .corporate-header {
+            background-color: #fff;
+            border-radius: 24px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+        }
+        .header-image-container {
+            width: 100%;
+            background: #f2f2f2;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .header-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            max-height: 150px;
+        }
+        .header-text-content {
+            padding: 14px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(135deg, #0B2B2F 0%, #1C4E4A 100%);
+        }
+        .brand-left {
+            display: flex;
+            flex-direction: column;
+        }
+        .brand-main {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #F7E05E;
+        }
+        .brand-sub {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #FFE6B3;
+        }
+        .copper-mark {
+            background: #D9A13B;
+            padding: 6px 16px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: #2b2f2c;
+        }
+        .responsibly {
+            font-weight: 600;
+            font-size: 0.7rem;
+            color: #FFE5B4;
+        }
+        .img-upload-bar {
+            padding: 8px 12px;
+            background: #f8fafc;
+            border-top: 1px solid #dce5ec;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .btn-img, .file-input-label {
+            background: #eef2f7;
+            border: 1px solid #cbdae2;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            cursor: pointer;
+            color: #2c5368;
+        }
+        .file-input-label {
+            background: #1f6e5c;
+            color: white;
+            border: none;
+        }
+        #imageUpload { display: none; }
+
+        /* Tarjetas de formulario */
+        .card {
+            background: white;
+            border-radius: 28px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+            padding: 20px 18px;
+            margin-bottom: 24px;
+        }
+        .report-header {
+            margin-bottom: 20px;
+        }
+        .fecha-line {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #2c5368;
+            margin-bottom: 12px;
+            border-bottom: 1px dashed #cbdae2;
+            padding-bottom: 8px;
+            display: inline-block;
+        }
+        .plan-title {
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: #0b2b3b;
+            margin: 10px 0 6px 0;
+        }
+        .jefe-line {
+            font-size: 1.1rem;
+            font-weight: 600;
+            background: #f0f6fa;
+            padding: 8px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            color: #115c6b;
+            width: auto;
+        }
+        .jefe-line select {
+            background: white;
+            border: 1px solid #cbdae2;
+            border-radius: 20px;
+            padding: 4px 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            font-family: inherit;
+            margin-left: 8px;
+            cursor: pointer;
+        }
+        .contract-table {
+            background: #f9fbfd;
+            border-radius: 20px;
+            padding: 12px 16px;
+            border: 1px solid #e2e8f0;
+        }
+        .contract-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            border-bottom: 1px solid #e2edeb;
+            padding: 12px 4px;
+        }
+        .contract-row:last-child { border-bottom: none; }
+        .contract-label {
+            font-weight: 650;
+            width: 38%;
+            color: #1a5a6e;
+            font-size: 0.85rem;
+        }
+        .contract-value {
+            width: 58%;
+            font-weight: 500;
+            color: #0f3b44;
+        }
+        .contract-value input, .contract-value .static-text {
+            width: 100%;
+            border: 1px solid #d4e0e8;
+            border-radius: 14px;
+            padding: 8px 12px;
+            font-size: 0.85rem;
+            background: white;
+            font-family: inherit;
+        }
+        h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 16px 0 12px 0;
+            color: #1f5e6e;
+            border-left: 4px solid #2c9b77;
+            padding-left: 12px;
+        }
+        textarea, input[type="text"], input[type="number"], input[type="date"], select {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 18px;
+            border: 1.5px solid #e2e8f0;
+            font-size: 0.95rem;
+            font-family: inherit;
+        }
+        .actividades-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .btn-renum {
+            align-self: flex-end;
+            background: #eef2f7;
+            border: 1px solid #cbdae2;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            cursor: pointer;
+        }
+        .epef-table-container {
+            overflow-x: auto;
+            margin: 16px 0 12px;
+            border-radius: 20px;
+            border: 1px solid #e2edeb;
+            background: white;
+        }
+        .epef-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+        .epef-table th {
+            background: #eaf3f0;
+            padding: 14px 10px;
+            text-align: left;
+            font-weight: 700;
+            color: #146b54;
+        }
+        .epef-table td {
+            padding: 10px 8px;
+            border-bottom: 1px solid #e2edeb;
+            vertical-align: top;
+        }
+        .epef-table select, .epef-table textarea {
+            width: 100%;
+            padding: 8px 10px;
+            border-radius: 14px;
+            border: 1px solid #cbdae2;
+            font-size: 0.8rem;
+        }
+        .btn-icon-row {
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+            color: #b16262;
+            padding: 4px 8px;
+            border-radius: 30px;
+        }
+        .btn-add {
+            background: #ecfdf5;
+            border: 1px dashed #2c9b77;
+            color: #146b54;
+            padding: 10px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            margin-top: 6px;
+        }
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 16px 0 8px;
+        }
+        .btn-primary, .btn-secondary, .btn-pdf {
+            padding: 12px 18px;
+            border-radius: 50px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            flex: 1;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        .btn-primary {
+            background: #1f6e5c;
+            color: white;
+        }
+        .btn-secondary {
+            background: #eef2f7;
+            color: #1f5e6e;
+            border: 1px solid #cbdae2;
+        }
+        .btn-pdf {
+            background: #b22234;
+            color: white;
+        }
+        /* CUADRO DE RESUMEN VISUAL */
+        .resumen-visual {
+            background: white;
+            border-radius: 28px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+            padding: 20px 20px;
+            margin-bottom: 24px;
+        }
+        .resumen-titulo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0b2b3b;
+            text-align: center;
+            margin: 10px 0 10px;
+            border-bottom: 2px solid #2c9b77;
+            display: inline-block;
+            width: 100%;
+        }
+        .resumen-sub {
+            font-weight: 600;
+            color: #1f5e6e;
+            margin: 15px 0 8px 0;
+            font-size: 1.1rem;
+            border-left: 3px solid #2c9b77;
+            padding-left: 12px;
+        }
+        .resumen-line {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 6px 0;
+            border-bottom: 1px solid #e9edf2;
+        }
+        .resumen-label {
+            width: 35%;
+            font-weight: 600;
+            color: #2c5368;
+        }
+        .resumen-value {
+            width: 65%;
+            color: #1a2c3e;
+        }
+        .actividades-texto {
+            background: #f9fafb;
+            padding: 12px;
+            border-radius: 16px;
+            white-space: pre-line;
+            font-size: 0.9rem;
+            border: 1px solid #e2e8f0;
+        }
+        .epef-tabla-resumen {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+        .epef-tabla-resumen th, .epef-tabla-resumen td {
+            border: 1px solid #d9e2e0;
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+        }
+        .epef-tabla-resumen th {
+            background: #eef3f0;
+        }
+        .observaciones-block {
+            background: #fef7e0;
+            padding: 12px;
+            border-radius: 14px;
+            margin-top: 5px;
+        }
+        .small-note {
+            font-size: 0.7rem;
+            color: #6f8f9c;
+            margin-top: 8px;
+        }
+        .toast-msg {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: #1e2f3a;
+            color: white;
+            text-align: center;
+            padding: 12px;
+            border-radius: 60px;
+            opacity: 0;
+            transition: 0.2s;
+            pointer-events: none;
+            z-index: 999;
+        }
+        .toast-msg.show { opacity: 1; }
+        footer {
+            text-align: center;
+            font-size: 0.7rem;
+            color: #8aa0ae;
+            margin-top: 10px;
+        }
+        @media (max-width: 600px) {
+            .resumen-label, .resumen-value {
+                width: 100%;
+            }
+            .jefe-line {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- CABECERA PRINCIPAL (EDITABLE CON IMAGEN, con persistencia) -->
+    <div class="corporate-header" id="headerPrincipal">
+        <div id="headerDynamicZone">
+            <!-- El contenido se carga dinámicamente según localStorage -->
+        </div>
+        <div class="img-upload-bar">
+            <label class="file-input-label">📷 Subir imagen para encabezado<input type="file" id="imageUpload" accept="image/*"></label>
+            <button type="button" class="btn-img" id="resetHeaderBtn">⟳ Restaurar texto</button>
+            <small>La imagen se guarda automáticamente (persistente, comprimida)</small>
+        </div>
+    </div>
+
+    <!-- FORMULARIO DE EDICIÓN -->
+    <div class="card">
+        <div class="report-header">
+            <div class="fecha-line">📅 Fecha: <input type="date" id="fechaDoc" value=""></div>
+            <div class="plan-title">Plan Diario Gerencia Proyectos</div>
+            <div class="jefe-line">👔 Jefe de Proyecto:
+                <select id="jefeNombre">
+                    <option value="Claudio Saavedra">Claudio Saavedra</option>
+                    <option value="Mauricio Pozo">Mauricio Pozo</option>
+                    <option value="Javier Valencia (Jefe de Área)">Javier Valencia (Jefe de Área)</option>
+                    <option value="Marcelo Reyes (Jefe de Área)">Marcelo Reyes (Jefe de Área)</option>
+                </select>
+            </div>
+        </div>
+        <div class="contract-table">
+            <div class="contract-row"><span class="contract-label">Nombre Contrato</span><span class="contract-value"><input type="text" id="nombreContrato" value="Servicio de Montaje Electromecánico MV-O"></span></div>
+            <div class="contract-row"><span class="contract-label">N° Contrato</span><span class="contract-value"><input type="text" id="numContrato" value="4500098314"></span></div>
+            <div class="contract-row"><span class="contract-label">Empresa</span><span class="contract-value"><input type="text" id="empresa" value="AVA Montajes"></span></div>
+            <div class="contract-row" style="gap:12px; flex-wrap:wrap;">
+                <div style="flex:1"><span class="contract-label">Dotación Directa</span><span class="contract-value"><input type="number" id="dotDirecta" value="0"></span></div>
+                <div style="flex:1"><span class="contract-label">Dotación Indirecta</span><span class="contract-value"><input type="number" id="dotIndirecta" value="0"></span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Actividades planificadas -->
+    <div class="card">
+        <h3>📌 Actividades planificadas</h3>
+        <div class="actividades-wrapper">
+            <textarea id="actividades" rows="7" placeholder="Escribe aquí tus actividades... Presiona Enter para crear una nueva línea numerada."></textarea>
+            <button type="button" class="btn-renum" id="renumerarActBtn">🔢 Renumerar actividades</button>
+        </div>
+        <div class="small-note">* Presiona Enter para crear una nueva actividad con el número siguiente. Usa el botón para reordenar la numeración si es necesario.</div>
+    </div>
+
+    <div class="card">
+        <h3>⚠️ EPEF aplicables y controles críticos</h3>
+        <div class="epef-table-container">
+            <table class="epef-table" id="epefTable">
+                <thead><tr><th>EPEF (Seleccione N°)</th><th>Controles que aplicar</th><th style="width:40px"></th></tr></thead>
+                <tbody id="epefTbody"></tbody>
+            </table>
+        </div>
+        <button type="button" class="btn-add" id="addEpefBtn">➕ Agregar EPEF</button>
+        <div class="small-note">* Seleccione "No Aplica EPEF" si no requiere controles. El campo se llena automáticamente.</div>
+    </div>
+
+    <div class="card">
+        <h3>📎 Observaciones / Notas de terreno</h3>
+        <textarea id="observaciones" rows="3" placeholder="Condiciones climáticas, novedades, restricciones..."></textarea>
+    </div>
+
+    <div class="button-group">
+        <button type="button" class="btn-secondary" id="resetBtn">⟳ Restaurar valores por defecto</button>
+        <button type="button" class="btn-primary" id="copyReportBtn">📋 Copiar texto</button>
+        <button type="button" class="btn-pdf" id="pdfExportBtn">📄 Exportar a PDF (carta - 1 página)</button>
+    </div>
+
+    <!-- CUADRO DE RESUMEN VISUAL -->
+    <div class="resumen-visual" id="resumenVisual">
+        <div id="resumenHeader"></div>
+        <div class="resumen-titulo">Plan Diario Gerencia Proyectos</div>
+        <div id="resumenContenido"></div>
+    </div>
+    <footer>Informe diario de montaje electromecánico — El encabezado se guarda automáticamente</footer>
+</div>
+<div id="toastMsg" class="toast-msg">✅ Acción completada</div>
+
+<script>
+    // --------------------------------------------------------------
+    // 0. CLAVES PARA LOCALSTORAGE
+    // --------------------------------------------------------------
+    const STORAGE_KEY_HEADER = 'customHeaderImage';
+    const STORAGE_KEY_JEFE = 'selectedJefe';
+
+    // --------------------------------------------------------------
+    // 1. DATOS PREDEFINIDOS EPEF (incluye "No Aplica EPEF")
+    // --------------------------------------------------------------
+    const epefData = {
+        "No Aplica EPEF": "No se requieren controles críticos para este caso.",
+        "N°1 Vehículos Livianos": "Verificar Check List Pre-uso. Usar cinturón 3 puntos y apoyacabezas. Mantener pértiga con banderín y baliza ámbar. Instalar pértiga con banderín y rejilla. Realizar mantención preventiva según fabricante",
+        "N°2 Equipos Móviles de Superficie": "Usar sistema anticolisión. Mantener alarma de retroceso. Instalar puntos de bloqueo de energía. Contar con supresor de incendio semiautomático.Operar con cabina sellada",
+        "N°3 Manejo de Sustancias Peligrosas": "Uso de EPP específico (respirador de medio rostro, guantes de neopreno). Hoja de datos de seguridad (HDS). Plan de emergencia difundido.",
+        "N°4 Protecciones de Máquinas y Equipos": "Instalar protecciones en partes móviles. Pintar protecciones de color amarillo. Retirar solo con equipo aislado y bloqueado. Verificar distancias de seguridad. Aprobar modificaciones con gestión de cambio.",
+        "N°5 Aislación de Energías y Bloqueo": "Aislar todas las fuentes de energía. Colocar candado personal. Realizar test de potencial cero. Probar equipo muerto antes de intervenir. Registrar en libro de bloqueo.",
+        "N°6 Trabajos en Altura": "Usar arnés de cuerpo completo. Anclar a punto resistente(22KN). Calcular espacio libre de caída. Demarcar área con barreras duras. Contar con plan de rescate.",
+        "N°7 Operaciones de Levante": "No exceder 85% de la capacidad SWL. Usar Rigger y vienteros para guiar carga. Elaborar plan de izaje para levante crítico. Suspender maniobras con viento. Inspeccionar elementos de izaje (código de colores)",
+        "N°8 Espacios Confinados": "Obtener permiso de entrada. Medir O₂ (19.5-23.5%), LEL <10%, CO <35 ppm). Designar vigía (ayudante) permanente. Usar trípode y arnés con línea de rescate. Ventilar 30 minutos previos al ingreso."
+    };
+    const epefList = Object.keys(epefData);
+
+    // --------------------------------------------------------------
+    // 2. FUNCIONES DE TABLA EPEF
+    // --------------------------------------------------------------
+    function createEpefRow(selectedEpef = "N°3 Manejo de Sustancias Peligrosas", customControls = "") {
+        const tr = document.createElement('tr');
+        const tdEpef = document.createElement('td');
+        const select = document.createElement('select');
+        epefList.forEach(opt => {
+            const option = document.createElement('option');
+            option.value = opt;
+            option.textContent = opt;
+            if (opt === selectedEpef) option.selected = true;
+            select.appendChild(option);
+        });
+        tdEpef.appendChild(select);
+        
+        const tdCtrl = document.createElement('td');
+        const textarea = document.createElement('textarea');
+        textarea.rows = 3;
+        let defaultText = epefData[selectedEpef] || "";
+        textarea.value = customControls || defaultText;
+        tdCtrl.appendChild(textarea);
+        
+        const updateFromSelect = () => {
+            const selected = select.value;
+            if (selected === "No Aplica EPEF") {
+                textarea.value = epefData["No Aplica EPEF"];
+            } else {
+                textarea.value = epefData[selected] || "";
+            }
+        };
+        
+        select.addEventListener('change', () => {
+            updateFromSelect();
+            actualizarResumenVisual();
+        });
+        textarea.addEventListener('input', () => actualizarResumenVisual());
+        
+        const tdDel = document.createElement('td');
+        const delBtn = document.createElement('button');
+        delBtn.innerHTML = '🗑️';
+        delBtn.classList.add('btn-icon-row');
+        delBtn.type = 'button';
+        delBtn.addEventListener('click', () => {
+            if (epefTbody.children.length <= 1) {
+                showToast('Debe haber al menos un EPEF registrado', 1500);
+                return;
+            }
+            tr.remove();
+            actualizarResumenVisual();
+        });
+        tdDel.appendChild(delBtn);
+        
+        tr.appendChild(tdEpef);
+        tr.appendChild(tdCtrl);
+        tr.appendChild(tdDel);
+        return tr;
+    }
+    
+    function loadDefaultEpef() {
+        epefTbody.innerHTML = '';
+        const row = createEpefRow("N°3 Manejo de Sustancias Peligrosas", "");
+        epefTbody.appendChild(row);
+        actualizarResumenVisual();
+    }
+    
+    function addEmptyEpef() {
+        const newRow = createEpefRow("N°1 Vehículos Livianos", "");
+        epefTbody.appendChild(newRow);
+        actualizarResumenVisual();
+        showToast('Nuevo EPEF agregado', 1000);
+    }
+    
+    // --------------------------------------------------------------
+    // 3. NUMERACIÓN AUTOMÁTICA DE ACTIVIDADES
+    // --------------------------------------------------------------
+    const actividadesTextarea = document.getElementById('actividades');
+    
+    function renumerarActividades() {
+        let texto = actividadesTextarea.value;
+        let lineas = texto.split(/\r?\n/);
+        let nuevasLineas = [];
+        let contador = 1;
+        for (let linea of lineas) {
+            let limpia = linea.replace(/^\d+\.\s*-\s*/, '').replace(/^\d+\.\s*/, '').trim();
+            if (limpia === "") continue;
+            nuevasLineas.push(`${contador}.- ${limpia}`);
+            contador++;
+        }
+        if (nuevasLineas.length === 0) {
+            actividadesTextarea.value = "";
+        } else {
+            actividadesTextarea.value = nuevasLineas.join('\n');
+        }
+        actualizarResumenVisual();
+    }
+    
+    actividadesTextarea.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            
+            if (actividadesTextarea.value.trim() === "") {
+                actividadesTextarea.value = "1.- ";
+                const len = actividadesTextarea.value.length;
+                actividadesTextarea.setSelectionRange(len, len);
+                actualizarResumenVisual();
+                return;
+            }
+            
+            const cursorPos = actividadesTextarea.selectionStart;
+            const texto = actividadesTextarea.value;
+            const lineas = texto.split(/\r?\n/);
+            let lineaIndex = 0;
+            let charCount = 0;
+            for (let i = 0; i < lineas.length; i++) {
+                if (cursorPos >= charCount && cursorPos <= charCount + lineas[i].length + 1) {
+                    lineaIndex = i;
+                    break;
+                }
+                charCount += lineas[i].length + 1;
+            }
+            let currentLine = lineas[lineaIndex] || "";
+            let match = currentLine.match(/^(\d+)\.-\s/);
+            let currentNum = match ? parseInt(match[1]) : lineas.length;
+            let nextNum = currentNum + 1;
+            lineas.splice(lineaIndex + 1, 0, `${nextNum}.- `);
+            actividadesTextarea.value = lineas.join('\n');
+            let newCursorPos = 0;
+            for (let i = 0; i <= lineaIndex; i++) {
+                newCursorPos += lineas[i].length + 1;
+            }
+            newCursorPos += (lineas[lineaIndex+1]?.indexOf(' ') || 0) + 2;
+            actividadesTextarea.setSelectionRange(newCursorPos, newCursorPos);
+            actualizarResumenVisual();
+        }
+    });
+    
+    actividadesTextarea.addEventListener('blur', () => {
+        if (actividadesTextarea.value.trim() !== "") {
+            renumerarActividades();
+        }
+    });
+    
+    document.getElementById('renumerarActBtn').addEventListener('click', () => {
+        renumerarActividades();
+        showToast('Actividades renumeradas', 1200);
+    });
+    
+    // --------------------------------------------------------------
+    // 4. MANEJO DE ENCABEZADO PERSISTENTE CON COMPRESIÓN
+    // --------------------------------------------------------------
+    const headerDynamicZone = document.getElementById('headerDynamicZone');
+    const imageUpload = document.getElementById('imageUpload');
+    const resetHeaderBtn = document.getElementById('resetHeaderBtn');
+    
+    const defaultHeaderHtml = `<div class="header-text-content">
+        <div class="brand-left"><div class="brand-main">CAPSTONE COPPER</div><div class="brand-sub">Mining with Purpose</div></div>
+        <div class="copper-mark">✦ THE COPPER MARK ✦</div>
+        <div class="responsibly">RESPONSIBLY PRODUCED COPPER</div>
+    </div>`;
+    
+    function resizeAndCompressImage(file, maxWidth = 800, quality = 0.8, callback) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const img = new Image();
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                let width = img.width;
+                let height = img.height;
+                if (width > maxWidth) {
+                    height = (height * maxWidth) / width;
+                    width = maxWidth;
+                }
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+                const dataUrl = canvas.toDataURL('image/jpeg', quality);
+                callback(dataUrl);
+            };
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+    
+    function setHeaderImageFromDataUrl(dataUrl) {
+        headerDynamicZone.innerHTML = `<div class="header-image-container"><img src="${dataUrl}" class="header-image" style="width:100%; height:auto;"></div>`;
+        try {
+            localStorage.setItem(STORAGE_KEY_HEADER, dataUrl);
+        } catch (err) {
+            console.warn("Error guardando imagen en localStorage:", err);
+            showToast("Error: imagen demasiado grande o almacenamiento lleno", 2000);
+        }
+        actualizarResumenVisual();
+    }
+    
+    function restoreDefaultHeader() {
+        headerDynamicZone.innerHTML = defaultHeaderHtml;
+        localStorage.removeItem(STORAGE_KEY_HEADER);
+        actualizarResumenVisual();
+        showToast('Encabezado de texto restaurado (imagen eliminada)', 1400);
+    }
+    
+    function loadSavedHeader() {
+        const saved = localStorage.getItem(STORAGE_KEY_HEADER);
+        if (saved && saved.startsWith('data:image/')) {
+            headerDynamicZone.innerHTML = `<div class="header-image-container"><img src="${saved}" class="header-image" style="width:100%; height:auto;"></div>`;
+        } else {
+            headerDynamicZone.innerHTML = defaultHeaderHtml;
+        }
+        actualizarResumenVisual();
+    }
+    
+    function handleImageUpload(file) {
+        resizeAndCompressImage(file, 800, 0.8, (compressedDataUrl) => {
+            setHeaderImageFromDataUrl(compressedDataUrl);
+            showToast('Imagen de encabezado guardada (comprimida y persistente)', 1500);
+        });
+    }
+    
+    imageUpload.addEventListener('change', (e) => {
+        if (e.target.files && e.target.files[0]) {
+            handleImageUpload(e.target.files[0]);
+        }
+        imageUpload.value = '';
+    });
+    resetHeaderBtn.addEventListener('click', restoreDefaultHeader);
+    
+    // --------------------------------------------------------------
+    // 5. SELECCIONAR JEFE DE PROYECTO (persistente)
+    // --------------------------------------------------------------
+    const jefeSelect = document.getElementById('jefeNombre');
+    
+    function loadSavedJefe() {
+        const savedJefe = localStorage.getItem(STORAGE_KEY_JEFE);
+        if (savedJefe && [...jefeSelect.options].some(opt => opt.value === savedJefe)) {
+            jefeSelect.value = savedJefe;
+        } else {
+            jefeSelect.value = "Javier Valencia (Jefe de Área)";
+        }
+    }
+    
+    function saveJefe() {
+        localStorage.setItem(STORAGE_KEY_JEFE, jefeSelect.value);
+    }
+    
+    jefeSelect.addEventListener('change', () => {
+        saveJefe();
+        actualizarResumenVisual();
+    });
+    
+    // --------------------------------------------------------------
+    // 6. ACTUALIZAR RESUMEN VISUAL
+    // --------------------------------------------------------------
+    function actualizarResumenVisual() {
+        const headerClone = document.getElementById('headerDynamicZone').cloneNode(true);
+        const fechaRaw = document.getElementById('fechaDoc').value;
+        let fechaFormateada = fechaRaw;
+        if (fechaRaw) {
+            const [y,m,d] = fechaRaw.split('-');
+            fechaFormateada = `${d}/${m}/${y}`;
+        }
+        const jefe = jefeSelect.options[jefeSelect.selectedIndex]?.text || "No especificado";
+        const nomCont = document.getElementById('nombreContrato').value.trim() || "---";
+        const nroCont = document.getElementById('numContrato').value.trim() || "---";
+        const empresaVal = document.getElementById('empresa').value.trim() || "---";
+        const dotDirect = document.getElementById('dotDirecta').value || "0";
+        const dotIndirect = document.getElementById('dotIndirecta').value || "0";
+        const actividades = document.getElementById('actividades').value.trim() || "No hay actividades registradas";
+        const observaciones = document.getElementById('observaciones').value.trim() || "Sin observaciones";
+        
+        const rows = document.querySelectorAll('#epefTbody tr');
+        let epefHtml = '';
+        if (rows.length === 0) {
+            epefHtml = '<tr><td colspan="2">No se registraron EPEF</td></tr>';
+        } else {
+            rows.forEach((row, idx) => {
+                const select = row.querySelector('td:first-child select');
+                const textarea = row.querySelector('td:nth-child(2) textarea');
+                const epefName = select ? select.value : "No definido";
+                const epefCtrl = textarea ? textarea.value.trim() : "";
+                epefHtml += `<tr>
+                                <td style="width:30%; vertical-align:top;"><strong>${escapeHtml(epefName)}</strong></td>
+                                <td style="vertical-align:top;">${escapeHtml(epefCtrl).replace(/\n/g, '<br>')}</td>
+                              </tr>`;
+            });
+        }
+        
+        const contenidoHtml = `
+            <div class="resumen-sub">DATOS GENERALES</div>
+            <div class="resumen-line"><div class="resumen-label">Fecha:</div><div class="resumen-value">${fechaFormateada}</div></div>
+            <div class="resumen-line"><div class="resumen-label">Jefe de Proyecto:</div><div class="resumen-value">${escapeHtml(jefe)}</div></div>
+            <div class="resumen-line"><div class="resumen-label">Nombre Contrato:</div><div class="resumen-value">${escapeHtml(nomCont)}</div></div>
+            <div class="resumen-line"><div class="resumen-label">N° Contrato:</div><div class="resumen-value">${escapeHtml(nroCont)}</div></div>
+            <div class="resumen-line"><div class="resumen-label">Empresa:</div><div class="resumen-value">${escapeHtml(empresaVal)}</div></div>
+            <div class="resumen-line"><div class="resumen-label">Dotación Directa:</div><div class="resumen-value">${dotDirect}</div></div>
+            <div class="resumen-line"><div class="resumen-label">Dotación Indirecta:</div><div class="resumen-value">${dotIndirect}</div></div>
+            
+            <div class="resumen-sub">ACTIVIDADES PLANIFICADAS</div>
+            <div class="actividades-texto">${escapeHtml(actividades).replace(/\n/g, '<br>')}</div>
+            
+            <div class="resumen-sub">EPEF APLICABLES Y CONTROLES CRÍTICOS</div>
+            <table class="epef-tabla-resumen" style="width:100%; border-collapse: collapse; margin-top: 6px;">
+                <thead>
+                    <tr style="background-color: #eef3f0;">
+                        <th style="border: 1px solid #cbdcd6; padding: 8px; text-align: left; width: 30%;">EPEF</th>
+                        <th style="border: 1px solid #cbdcd6; padding: 8px; text-align: left; width: 70%;">Controles que aplicar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${epefHtml}
+                </tbody>
+            </table>
+            
+            <div class="resumen-sub">OBSERVACIONES / NOTAS DE TERRENO</div>
+            <div class="observaciones-block">${escapeHtml(observaciones).replace(/\n/g, '<br>') || 'Ninguna'}</div>
+            
+            <div style="margin-top: 16px; text-align: center; font-size: 0.7rem; color: #6f8f9c;">
+                Reporte generado: ${new Date().toLocaleString()}
+            </div>
+        `;
+        
+        document.getElementById('resumenHeader').innerHTML = '';
+        document.getElementById('resumenHeader').appendChild(headerClone);
+        document.getElementById('resumenContenido').innerHTML = contenidoHtml;
+    }
+    
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+            return c;
+        });
+    }
+    
+    // --------------------------------------------------------------
+    // 7. EXPORTAR PDF (con encabezado a todo color y tabla completa)
+    // --------------------------------------------------------------
+    function exportarPDF() {
+        // Forzar actualización para tener los datos más recientes
+        actualizarResumenVisual();
+        
+        // Clonar el resumen visual completo
+        const resumenVisual = document.getElementById('resumenVisual').cloneNode(true);
+        
+        // Asegurar que dentro del clon la tabla tenga los bordes correctos
+        const tablaClon = resumenVisual.querySelector('.epef-tabla-resumen');
+        if (tablaClon) {
+            tablaClon.setAttribute('style', 'width:100%; border-collapse: collapse; margin-top: 6px;');
+            const celdas = tablaClon.querySelectorAll('th, td');
+            celdas.forEach(celda => {
+                celda.setAttribute('style', 'border: 1px solid #cbdcd6; padding: 8px; text-align: left; vertical-align: top;');
+            });
+            const encabezados = tablaClon.querySelectorAll('th');
+            encabezados.forEach(th => {
+                th.setAttribute('style', 'background-color: #eef3f0; border: 1px solid #cbdcd6; padding: 8px; text-align: left; font-weight: bold;');
+            });
+        }
+        
+        // Asegurar que el encabezado tenga los colores originales (sin opacidad)
+        const headerClon = resumenVisual.querySelector('#resumenHeader');
+        if (headerClon) {
+            // Forzar que el contenido del encabezado herede los estilos correctos
+            const headerContent = headerClon.querySelector('.header-text-content');
+            if (headerContent) {
+                headerContent.setAttribute('style', 'padding: 14px 20px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; background: linear-gradient(135deg, #0B2B2F 0%, #1C4E4A 100%); color: white;');
+            }
+            const headerImageContainer = headerClon.querySelector('.header-image-container');
+            if (headerImageContainer) {
+                headerImageContainer.setAttribute('style', 'width: 100%; background: #f2f2f2; text-align: center;');
+            }
+            const headerImage = headerClon.querySelector('.header-image');
+            if (headerImage) {
+                headerImage.setAttribute('style', 'width: 100%; max-height: 110px; object-fit: contain;');
+            }
+        }
+        
+        const pdfHtml = `<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Informe Diario - Plan Gerencia Proyectos</title>
+            <style>
+                * {
+                    margin: 0;
+                    padding: 0;
+                    box-sizing: border-box;
+                }
+                body { 
+                    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; 
+                    padding: 0.4in; 
+                    font-size: 10pt; 
+                    line-height: 1.3; 
+                    background: white;
+                }
+                @page { 
+                    size: Letter; 
+                    margin: 0.4in; 
+                }
+                /* Estilos completos para que el encabezado se vea igual */
+                .header-image-container {
+                    width: 100%;
+                    background: #f2f2f2;
+                    text-align: center;
+                }
+                .header-image {
+                    width: 100%;
+                    max-height: 110px;
+                    object-fit: contain;
+                }
+                .header-text-content {
+                    padding: 14px 20px;
+                    display: flex;
+                    flex-wrap: wrap;
+                    align-items: center;
+                    justify-content: space-between;
+                    background: linear-gradient(135deg, #0B2B2F 0%, #1C4E4A 100%);
+                    color: white;
+                }
+                .brand-main {
+                    font-size: 1.2rem;
+                    font-weight: 800;
+                    color: #F7E05E;
+                }
+                .brand-sub {
+                    font-size: 0.75rem;
+                    font-weight: 500;
+                    color: #FFE6B3;
+                }
+                .copper-mark {
+                    background: #D9A13B;
+                    padding: 6px 16px;
+                    border-radius: 60px;
+                    font-weight: 700;
+                    font-size: 0.8rem;
+                    color: #2b2f2c;
+                }
+                .responsibly {
+                    font-weight: 600;
+                    font-size: 0.7rem;
+                    color: #FFE5B4;
+                }
+                .resumen-titulo {
+                    font-size: 1.3rem;
+                    font-weight: 700;
+                    text-align: center;
+                    margin: 12px 0;
+                    border-bottom: 2px solid #2c9b77;
+                    width: 100%;
+                }
+                .resumen-sub {
+                    font-weight: 600;
+                    color: #146B54;
+                    margin: 12px 0 6px;
+                    border-left: 3px solid #2c9b77;
+                    padding-left: 10px;
+                    font-size: 0.95rem;
+                }
+                .resumen-line {
+                    display: flex;
+                    padding: 4px 0;
+                    border-bottom: 1px solid #e2edeb;
+                }
+                .resumen-label {
+                    width: 35%;
+                    font-weight: 600;
+                    color: #2c5368;
+                }
+                .resumen-value {
+                    width: 65%;
+                }
+                .actividades-texto {
+                    background: #f9fafb;
+                    padding: 8px;
+                    border-radius: 12px;
+                    white-space: pre-line;
+                    border: 1px solid #e2e8f0;
+                    font-size: 9.5pt;
+                }
+                .observaciones-block {
+                    background: #fef7e0;
+                    padding: 8px;
+                    border-radius: 12px;
+                    font-size: 9.5pt;
+                }
+                footer {
+                    text-align: center;
+                    font-size: 0.6rem;
+                    color: #8aa0ae;
+                    margin-top: 12px;
+                    padding-top: 8px;
+                    border-top: 1px solid #ccc;
+                }
+                .resumen-visual-pdf, .resumen-sub, .actividades-texto, .epef-tabla-resumen, .observaciones-block {
+                    page-break-inside: avoid;
+                    break-inside: avoid;
+                }
+                table, th, td {
+                    border: 1px solid #cbdcd6;
+                    border-collapse: collapse;
+                }
+                th, td {
+                    padding: 8px;
+                    text-align: left;
+                    vertical-align: top;
+                }
+                th {
+                    background-color: #eef3f0;
+                    font-weight: bold;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="resumen-visual-pdf">
+                ${resumenVisual.innerHTML}
+                <footer>Documento generado desde Sistema de Gestión de Proyectos - Tamaño Carta</footer>
+            </div>
+        </body>
+        </html>`;
+        
+        const win = window.open();
+        win.document.write(pdfHtml);
+        win.document.close();
+        win.focus();
+        win.print();
+        showToast('📄 Generando PDF con encabezado a todo color', 2000);
+    }
+    
+    // --------------------------------------------------------------
+    // 8. COPIAR TEXTO PLANO
+    // --------------------------------------------------------------
+    function generarTextoPlano() {
+        const fechaRaw = document.getElementById('fechaDoc').value;
+        let fechaFormateada = fechaRaw;
+        if (fechaRaw) {
+            const [y,m,d] = fechaRaw.split('-');
+            fechaFormateada = `${d}/${m}/${y}`;
+        }
+        const jefe = jefeSelect.options[jefeSelect.selectedIndex]?.text || "No especificado";
+        const nomCont = document.getElementById('nombreContrato').value.trim() || "---";
+        const nroCont = document.getElementById('numContrato').value.trim() || "---";
+        const empresaVal = document.getElementById('empresa').value.trim() || "---";
+        const dotDirect = document.getElementById('dotDirecta').value || "0";
+        const dotIndirect = document.getElementById('dotIndirecta').value || "0";
+        const actividades = document.getElementById('actividades').value.trim() || "No hay actividades registradas";
+        const observaciones = document.getElementById('observaciones').value.trim() || "Sin observaciones";
+        
+        const rows = document.querySelectorAll('#epefTbody tr');
+        let epefTexto = "";
+        rows.forEach((row, idx) => {
+            const select = row.querySelector('td:first-child select');
+            const textarea = row.querySelector('td:nth-child(2) textarea');
+            const epefName = select ? select.value : "No definido";
+            const epefCtrl = textarea ? textarea.value.trim() : "";
+            epefTexto += `\n   ${idx+1}. EPEF: ${epefName}\n      Controles: ${epefCtrl.replace(/\n/g, '\n        ')}`;
+        });
+        if (epefTexto === "") epefTexto = "\n   No se registraron EPEF aplicables.";
+        
+        return `INFORME DIARIO - PLAN GERENCIA PROYECTOS\n${'─'.repeat(50)}\n📅 Fecha: ${fechaFormateada}\n👔 Jefe de Proyecto: ${jefe}\n\n📄 CONTRATO\n• Nombre Contrato: ${nomCont}\n• N° Contrato: ${nroCont}\n• Empresa: ${empresaVal}\n• Dotación Directa: ${dotDirect} | Dotación Indirecta: ${dotIndirect}\n\n⚙️ ACTIVIDADES PLANIFICADAS:\n${actividades}\n\n⚠️ EPEF APLICABLES Y CONTROLES CRÍTICOS:${epefTexto}\n\n📝 OBSERVACIONES:\n${observaciones}\n${'─'.repeat(50)}\nGenerado desde sistema móvil – ${new Date().toLocaleString()}`;
+    }
+    
+    async function copiarTextoPlano() {
+        const texto = generarTextoPlano();
+        try {
+            await navigator.clipboard.writeText(texto);
+            showToast('✅ Informe copiado al portapapeles', 1800);
+        } catch(e) {
+            const temp = document.createElement('textarea');
+            temp.value = texto;
+            document.body.appendChild(temp);
+            temp.select();
+            document.execCommand('copy');
+            document.body.removeChild(temp);
+            showToast('✅ Copiado (fallback)', 1500);
+        }
+    }
+    
+    // --------------------------------------------------------------
+    // 9. RESTAURAR FORMULARIO
+    // --------------------------------------------------------------
+    function resetFormulario() {
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('fechaDoc').value = today;
+        jefeSelect.value = "Javier Valencia (Jefe de Área)";
+        saveJefe();
+        document.getElementById('nombreContrato').value = 'Servicio de Montaje Electromecánico MV-O';
+        document.getElementById('numContrato').value = '4500098314';
+        document.getElementById('empresa').value = 'AVA Montajes';
+        document.getElementById('dotDirecta').value = '0';
+        document.getElementById('dotIndirecta').value = '0';
+        document.getElementById('actividades').value = '';
+        document.getElementById('observaciones').value = '';
+        loadDefaultEpef();
+        showToast('Formulario restaurado (actividades en blanco, dotaciones en 0)', 1800);
+    }
+    
+    // --------------------------------------------------------------
+    // 10. INICIALIZACIÓN Y EVENTOS
+    // --------------------------------------------------------------
+    const epefTbody = document.getElementById('epefTbody');
+    const addEpefBtn = document.getElementById('addEpefBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const copyBtn = document.getElementById('copyReportBtn');
+    const pdfBtn = document.getElementById('pdfExportBtn');
+    
+    const inputs = ['fechaDoc', 'nombreContrato', 'numContrato', 'empresa', 'dotDirecta', 'dotIndirecta', 'observaciones'];
+    inputs.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('input', () => actualizarResumenVisual());
+    });
+    
+    addEpefBtn.addEventListener('click', addEmptyEpef);
+    resetBtn.addEventListener('click', resetFormulario);
+    copyBtn.addEventListener('click', copiarTextoPlano);
+    pdfBtn.addEventListener('click', exportarPDF);
+    
+    loadSavedHeader();
+    loadSavedJefe();
+    loadDefaultEpef();
+    
+    const todayDate = new Date().toISOString().split('T')[0];
+    if (!document.getElementById('fechaDoc').value) {
+        document.getElementById('fechaDoc').value = todayDate;
+    }
+    
+    let toastTimeout;
+    function showToast(msg, dur=2000) {
+        const toast = document.getElementById('toastMsg');
+        toast.textContent = msg;
+        toast.classList.add('show');
+        if(toastTimeout) clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(() => toast.classList.remove('show'), dur);
+    }
+</script>
+</body>
+</html>
